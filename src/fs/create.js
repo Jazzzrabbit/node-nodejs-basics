@@ -1,13 +1,24 @@
 import fs from 'fs/promises';
+import * as url from 'url';
+import path from 'path';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const create = async () => {
-  const path = './files';
+  const files = './files';
   const file = 'fresh.txt';
   const msg = 'I am fresh and young';
   const errorMsg = 'FS operation failed';
-  const dir = await fs.readdir(path);
+  let dir;
+
+  try {
+    dir = await fs.readdir(path.join(__dirname, files));
+  } catch {
+    throw new Error(errorMsg);
+  }
+  
   if (dir.includes(file)) throw new Error(errorMsg);
-  else fs.writeFile(`${path}/${file}`, msg);
+  else fs.writeFile(path.join(__dirname, files, file), msg);
 };
 
 await create();
