@@ -9,17 +9,13 @@ const rename = async () => {
   const wrong = 'wrongFilename.txt';
   const proper = 'properFilename.md';
   const errorMsg = 'FS operation failed';
-  let dir;
 
   try {
-    dir = await fs.readdir(path.join(__dirname, files));
+    const dir = await fs.readdir(path.join(__dirname, files));
+    if (dir.includes(proper) || !dir.includes(wrong)) throw new Error(errorMsg);
+    else fs.rename(path.join(__dirname, files, wrong), path.join(__dirname, files, proper));
   } catch {
     throw new Error(errorMsg);
-  }
-
-  if (dir.includes(proper) || !dir.includes(wrong)) throw new Error(errorMsg);
-  else {
-    fs.rename(path.join(__dirname, files, wrong), path.join(__dirname, files, proper));
   }
 };
 

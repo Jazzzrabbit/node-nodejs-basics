@@ -9,16 +9,14 @@ const create = async () => {
   const file = 'fresh.txt';
   const msg = 'I am fresh and young';
   const errorMsg = 'FS operation failed';
-  let dir;
 
   try {
-    dir = await fs.readdir(path.join(__dirname, files));
+    const dir = await fs.readdir(path.join(__dirname, files));
+    if (dir.includes(file)) throw new Error(errorMsg);
+    else fs.writeFile(path.join(__dirname, files, file), msg);
   } catch {
     throw new Error(errorMsg);
   }
-  
-  if (dir.includes(file)) throw new Error(errorMsg);
-  else fs.writeFile(path.join(__dirname, files, file), msg);
 };
 
 await create();

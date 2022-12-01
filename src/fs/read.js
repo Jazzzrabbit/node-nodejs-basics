@@ -8,10 +8,9 @@ const read = async () => {
   const files = `files`;
   const errorMsg = 'FS operation failed';
   const toRead = 'fileToRead.txt';
-  let dir;
 
   try {
-    dir = await fs.readdir(path.join(__dirname, files));
+    await fs.readdir(path.join(__dirname, files));
     const content = await fs.readFile(path.join(__dirname, files, toRead), 'utf-8');
     console.log(content);
   } catch {
