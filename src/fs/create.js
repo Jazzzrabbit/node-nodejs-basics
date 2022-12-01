@@ -5,7 +5,7 @@ import path from 'path';
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const create = async () => {
-  const files = './files';
+  const files = 'files';
   const file = 'fresh.txt';
   const msg = 'I am fresh and young';
   const errorMsg = 'FS operation failed';
