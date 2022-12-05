@@ -9,7 +9,8 @@ const spawnChildProcess = async (args) => {
   const file = 'script.js';
   const fileName = path.join(__dirname, files, file);
   const child = fork(fileName, args);
-  child.on('close', () => console.log('Don`t worry, be happy and sleep more!'));
+  child.on('error', err => console.error(err));
+  child.on('close', () => console.log('Child process finished its work.'));
 };
 
-spawnChildProcess(['Type anything to get a response from master process.', 'Type CLOSE to exit.']);
+spawnChildProcess(['Type in to get a response', 'Type CLOSE to exit']);
