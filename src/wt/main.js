@@ -15,18 +15,15 @@ const performCalculations = async () => {
     workers.push(new Promise((res, rej) => {
       const worker = new Worker(filename, { workerData: 10 + i });
       worker
-        .on('message', data => res({ 
-          'status': 'resolved',
-          'data': data 
-        }))
-        .on('error', () => rej({
-          'status': 'error',
-          'data': null
-        }));
+        .on('message', data => res(data))
+        .on('error', () => rej());
     }));
   }
 
-  await Promise.all(workers).then(data => console.log(data));
+  (await Promise.allSettled(workers)).map(({ status, value }) => console.log({
+    'status': status === 'fulfilled' ? 'resolved' : 'error',
+    'data': status === 'fulfilled' ? value : null
+  }));
 };
 
 await performCalculations();
